@@ -1,4 +1,6 @@
 package com.example.bibliotheque_api.controllers;
+import com.example.bibliotheque_api.dto.LivreRequestDto;
+import com.example.bibliotheque_api.dto.LivreResponseDto;
 import com.example.bibliotheque_api.models.Livre;
 
 import java.util.List;
@@ -12,6 +14,9 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.bibliotheque_api.services.LivreService;
+
+import jakarta.validation.Valid;
+
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -32,19 +37,21 @@ public class LivreController {
     }
 
     @GetMapping
-    public List<Livre> getAllLivres() {
-        return livreService.getAllLivres();
+    public List<LivreResponseDto> getAllLivres() {
+        return livreService.getAllLivresResponse();
     }
 
     @GetMapping("/{id}")
-    public Livre getLivreById(@PathVariable Long id) {
-       return livreService.getLivreById(id);
+    public LivreResponseDto getLivreResponseById(@PathVariable Long id) {
+       return livreService.getLivreResponseById(id);
        
     }
 
+    
+
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Livre createLivre(@RequestBody Livre livre) {
+    public LivreResponseDto createLivre(@Valid @RequestBody LivreRequestDto livre) {
         
         return livreService.createLivre(livre);
     }
@@ -56,7 +63,7 @@ public class LivreController {
     }
 
     @PutMapping("/{id}")
-    public Livre updateLivre(@PathVariable Long id, @RequestBody Livre livre) {        
+    public LivreResponseDto updateLivre(@PathVariable Long id, @Valid @RequestBody LivreRequestDto livre) {        
         return livreService.updateLivre(id,livre);
     }
     
