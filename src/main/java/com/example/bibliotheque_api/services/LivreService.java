@@ -32,7 +32,7 @@ public class LivreService {
 
         return getAllLivres().stream()
                 .map(livre -> livreMapper.toDto(livre))
-                .collect(Collectors.toList());
+                .toList();
     }
 
 
